@@ -1,0 +1,22 @@
+{
+    "expo": {
+        "name": "Pagada Mentor",
+        "slug": "pagada-mentor",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "userInterfaceStyle": "light",
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.pagada.mentor"
+        },
+        "android": {
+            "package": "com.pagada.mentor"
+        },
+        "plugins": [
+            "expo-router",
+            "expo-asset",
+            "expo-font"
+        ],
+        "scheme": "pagada-mentor"
+    }
+}
