@@ -9,17 +9,20 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import Button from '../components/Button';
 import { COLORS, SIZES, FONT_WEIGHTS, SHADOWS } from '../constants/theme';
 
-export default function VerifyOTPScreen({ navigation, route }) {
+export default function VerifyOTPScreen() {
+    const router = useRouter();
+    const params = useLocalSearchParams();
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [timer, setTimer] = useState(30);
     const inputRefs = useRef([]);
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(30)).current;
 
-    const phoneNumber = route?.params?.phoneNumber || '+91 98765 43210';
+    const phoneNumber = params?.phoneNumber || '+91 98765 43210';
 
     useEffect(() => {
         Animated.parallel([
@@ -64,8 +67,11 @@ export default function VerifyOTPScreen({ navigation, route }) {
 
     const handleVerify = () => {
         const otpCode = otp.join('');
-        console.log('Verifying OTP:', otpCode);
-        // Handle OTP verification
+        if (otpCode.length === 6) {
+            console.log('Verifying OTP:', otpCode);
+            // Navigate to main app after successful verification
+            router.replace('/(tabs)');
+        }
     };
 
     const handleResend = () => {
@@ -76,7 +82,7 @@ export default function VerifyOTPScreen({ navigation, route }) {
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
             {/* Header */}
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation?.goBack()}>
+            <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
                 <Ionicons name="arrow-back" size={24} color={COLORS.textPrimary} />
             </TouchableOpacity>
 
@@ -91,9 +97,7 @@ export default function VerifyOTPScreen({ navigation, route }) {
             >
                 {/* Icon */}
                 <View style={styles.iconContainer}>
-                    <View style={styles.iconCircle}>
-                        <Ionicons name="lock-closed" size={40} color={COLORS.primary} />
-                    </View>
+                    <Ionicons name="lock-closed" size={48} color={COLORS.primary} />
                 </View>
 
                 {/* Title */}
@@ -109,10 +113,7 @@ export default function VerifyOTPScreen({ navigation, route }) {
                         <TextInput
                             key={index}
                             ref={(ref) => (inputRefs.current[index] = ref)}
-                            style={[
-                                styles.otpInput,
-                                digit && styles.otpInputFilled,
-                            ]}
+                            style={styles.otpInput}
                             value={digit}
                             onChangeText={(value) => handleOtpChange(value, index)}
                             onKeyPress={(e) => handleKeyPress(e, index)}
@@ -148,7 +149,7 @@ export default function VerifyOTPScreen({ navigation, route }) {
                 {/* Change Number */}
                 <TouchableOpacity
                     style={styles.changeNumberButton}
-                    onPress={() => navigation?.goBack()}
+                    onPress={() => router.back()}
                 >
                     <Text style={styles.changeNumberText}>Change Phone Number</Text>
                 </TouchableOpacity>
@@ -174,15 +175,6 @@ const styles = StyleSheet.create({
     iconContainer: {
         alignItems: 'center',
         marginBottom: SIZES.xl,
-    },
-    iconCircle: {
-        width: 100,
-        height: 100,
-        borderRadius: SIZES.radiusFull,
-        backgroundColor: COLORS.primary + '20',
-        alignItems: 'center',
-        justifyContent: 'center',
-        ...SHADOWS.medium,
     },
     title: {
         fontSize: SIZES.xxxLarge,
@@ -220,10 +212,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: COLORS.textPrimary,
         ...SHADOWS.small,
-    },
-    otpInputFilled: {
-        borderColor: COLORS.primary,
-        backgroundColor: COLORS.primary + '10',
     },
     resendContainer: {
         alignItems: 'center',

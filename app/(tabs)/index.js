@@ -66,7 +66,7 @@ export default function DashboardScreen() {
                 </View>
 
                 {/* Stats Grid */}
-                <Animated.View 
+                <Animated.View
                     style={[
                         styles.statsGrid,
                         {

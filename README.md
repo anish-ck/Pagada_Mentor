@@ -153,5 +153,5 @@ This is a frontend-only implementation. Backend integration will be added in fut
 
 ---
 
-Built with ❤️ using React Native and Expo
+Built using React Native and Expo
 

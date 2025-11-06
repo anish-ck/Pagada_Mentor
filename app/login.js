@@ -12,14 +12,16 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import Button from '../components/Button';
 import { COLORS, SIZES, FONT_WEIGHTS, SHADOWS } from '../constants/theme';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+    const router = useRouter();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [countryCode, setCountryCode] = useState('+91');
     const [isFocused, setIsFocused] = useState(false);
-    
+
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(50)).current;
 
@@ -39,13 +41,18 @@ export default function LoginScreen({ navigation }) {
     }, []);
 
     const handlePhoneLogin = () => {
-        // Handle phone number login
-        console.log('Login with phone:', countryCode + phoneNumber);
+        if (phoneNumber.length === 10) {
+            router.push({
+                pathname: '/verify-otp',
+                params: { phoneNumber: countryCode + ' ' + phoneNumber }
+            });
+        }
     };
 
     const handleGoogleLogin = () => {
-        // Handle Google login
+        // Simulate successful Google login
         console.log('Login with Google');
+        router.replace('/(tabs)');
     };
 
     const formatPhoneNumber = (text) => {
@@ -73,11 +80,6 @@ export default function LoginScreen({ navigation }) {
                             },
                         ]}
                     >
-                        <View style={styles.logoContainer}>
-                            <View style={styles.logo}>
-                                <Ionicons name="fitness" size={48} color={COLORS.primary} />
-                            </View>
-                        </View>
                         <Text style={styles.title}>Welcome to Pagada</Text>
                         <Text style={styles.subtitle}>
                             Connect with expert mentors and achieve your sports goals
@@ -125,6 +127,7 @@ export default function LoginScreen({ navigation }) {
                             onPress={handlePhoneLogin}
                             style={styles.loginButton}
                             icon={<Ionicons name="call" size={18} color={COLORS.white} />}
+                            disabled={phoneNumber.length !== 10}
                         />
 
                         {/* Divider */}
@@ -145,16 +148,6 @@ export default function LoginScreen({ navigation }) {
                             </View>
                             <Text style={styles.googleButtonText}>Continue with Google</Text>
                         </TouchableOpacity>
-
-                        {/* Additional Options */}
-                        <View style={styles.optionsContainer}>
-                            <TouchableOpacity style={styles.socialButton}>
-                                <Ionicons name="logo-apple" size={24} color={COLORS.textPrimary} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.socialButton}>
-                                <Ionicons name="logo-facebook" size={24} color="#1877F2" />
-                            </TouchableOpacity>
-                        </View>
                     </Animated.View>
 
                     {/* Footer */}
@@ -194,18 +187,6 @@ const styles = StyleSheet.create({
     header: {
         alignItems: 'center',
         marginBottom: SIZES.xxl,
-    },
-    logoContainer: {
-        marginBottom: SIZES.lg,
-    },
-    logo: {
-        width: 100,
-        height: 100,
-        borderRadius: SIZES.radiusFull,
-        backgroundColor: COLORS.primary + '20',
-        alignItems: 'center',
-        justifyContent: 'center',
-        ...SHADOWS.large,
     },
     title: {
         fontSize: SIZES.xxxLarge,
@@ -310,22 +291,6 @@ const styles = StyleSheet.create({
         fontSize: SIZES.medium,
         fontWeight: FONT_WEIGHTS.semiBold,
         color: COLORS.textPrimary,
-    },
-    optionsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        gap: SIZES.md,
-    },
-    socialButton: {
-        width: 56,
-        height: 56,
-        borderRadius: SIZES.radiusMedium,
-        backgroundColor: COLORS.white,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        alignItems: 'center',
-        justifyContent: 'center',
-        ...SHADOWS.small,
     },
     footer: {
         marginTop: 'auto',
