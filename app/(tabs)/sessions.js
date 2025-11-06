@@ -89,7 +89,12 @@ export default function SessionsScreen() {
                 </Card>
 
                 {/* Tabs */}
-                <View style={styles.tabs}>
+                <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    style={styles.tabs}
+                    contentContainerStyle={styles.tabsContent}
+                >
                     <TabButton
                         title="Upcoming"
                         active={activeTab === 'upcoming'}
@@ -105,7 +110,7 @@ export default function SessionsScreen() {
                         active={activeTab === 'cancelled'}
                         onPress={() => setActiveTab('cancelled')}
                     />
-                </View>
+                </ScrollView>
 
                 {/* Sessions List */}
                 <View style={styles.sessionsList}>
@@ -199,9 +204,10 @@ const styles = StyleSheet.create({
         marginTop: 0,
     },
     tabs: {
-        flexDirection: 'row',
-        paddingHorizontal: SIZES.md,
         marginVertical: SIZES.md,
+    },
+    tabsContent: {
+        paddingHorizontal: SIZES.md,
     },
     sessionsList: {
         padding: SIZES.md,
