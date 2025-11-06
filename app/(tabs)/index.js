@@ -17,9 +17,9 @@ export default function DashboardScreen() {
     ];
 
     const recentMentees = [
-        { id: 1, name: 'Arjun Patel', sport: '🏏 Cricket', status: 'Active', avatar: 'AP' },
-        { id: 2, name: 'Priya Sharma', sport: '⚽ Football', status: 'Active', avatar: 'PS' },
-        { id: 3, name: 'Rohit Kumar', sport: '🏏 Cricket', status: 'Pending', avatar: 'RK' },
+        { id: 1, name: 'Arjun Patel', sport: 'Cricket', sportIcon: 'baseball', status: 'Active', avatar: 'AP' },
+        { id: 2, name: 'Priya Sharma', sport: 'Football', sportIcon: 'football', status: 'Active', avatar: 'PS' },
+        { id: 3, name: 'Rohit Kumar', sport: 'Cricket', sportIcon: 'baseball', status: 'Pending', avatar: 'RK' },
     ];
 
     const chartData = {
@@ -35,7 +35,10 @@ export default function DashboardScreen() {
                 {/* Header */}
                 <View style={styles.header}>
                     <View>
-                        <Text style={styles.greeting}>Good Morning 👋</Text>
+                        <View style={styles.greetingRow}>
+                            <Text style={styles.greeting}>Good Morning</Text>
+                            <Ionicons name="hand-right" size={20} color={COLORS.warning} style={styles.waveIcon} />
+                        </View>
                         <Text style={styles.name}>Rajesh Kumar</Text>
                     </View>
                     <View style={styles.notificationBadge}>
@@ -100,7 +103,10 @@ export default function DashboardScreen() {
                             </View>
                             <View style={styles.menteeInfo}>
                                 <Text style={styles.menteeName}>{mentee.name}</Text>
-                                <Text style={styles.menteeSport}>{mentee.sport}</Text>
+                                <View style={styles.sportRow}>
+                                    <Ionicons name={mentee.sportIcon} size={14} color={COLORS.textSecondary} />
+                                    <Text style={styles.menteeSport}>{mentee.sport}</Text>
+                                </View>
                             </View>
                             <View style={[
                                 styles.statusBadge,
@@ -138,6 +144,13 @@ const styles = StyleSheet.create({
     greeting: {
         fontSize: SIZES.medium,
         color: COLORS.textSecondary,
+    },
+    greetingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    waveIcon: {
+        marginLeft: SIZES.xs,
     },
     name: {
         fontSize: SIZES.xxLarge,
@@ -248,10 +261,15 @@ const styles = StyleSheet.create({
         fontWeight: FONT_WEIGHTS.semiBold,
         color: COLORS.textPrimary,
     },
+    sportRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: SIZES.xs,
+    },
     menteeSport: {
         fontSize: SIZES.small,
         color: COLORS.textSecondary,
-        marginTop: SIZES.xs,
+        marginLeft: SIZES.xs,
     },
     statusBadge: {
         paddingHorizontal: SIZES.sm,

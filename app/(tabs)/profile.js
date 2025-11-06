@@ -73,7 +73,7 @@ export default function ProfileScreen() {
                                 <Text style={styles.reviews}>({mentorProfile.totalReviews} reviews)</Text>
                             </View>
                             <View style={styles.sportBadge}>
-                                <Text style={styles.sportEmoji}>{mentorProfile.sport.emoji}</Text>
+                                <Ionicons name={mentorProfile.sport.icon} size={16} color={COLORS.textPrimary} />
                                 <Text style={styles.sportName}>{mentorProfile.sport.name}</Text>
                             </View>
                         </View>
@@ -330,14 +330,11 @@ const styles = StyleSheet.create({
         borderRadius: SIZES.radiusFull,
         alignSelf: 'flex-start',
     },
-    sportEmoji: {
-        fontSize: SIZES.medium,
-        marginRight: SIZES.xs,
-    },
     sportName: {
         fontSize: SIZES.small,
         fontWeight: FONT_WEIGHTS.medium,
         color: COLORS.textPrimary,
+        marginLeft: SIZES.xs,
     },
     statsRow: {
         flexDirection: 'row',

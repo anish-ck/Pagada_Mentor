@@ -18,7 +18,8 @@ export default function MentorshipScreen() {
             id: 1,
             name: 'Rohit Kumar',
             age: 24,
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
             experience: '3 years',
             goal: 'Improve batting technique and strategy',
             avatar: 'RK',
@@ -28,7 +29,8 @@ export default function MentorshipScreen() {
             id: 2,
             name: 'Sneha Reddy',
             age: 21,
-            sport: '⚽ Football',
+            sport: 'Football',
+            sportIcon: 'football',
             experience: '2 years',
             goal: 'Professional football career guidance',
             avatar: 'SR',
@@ -38,7 +40,8 @@ export default function MentorshipScreen() {
             id: 3,
             name: 'Karthik Menon',
             age: 26,
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
             experience: '5 years',
             goal: 'Advanced bowling techniques',
             avatar: 'KM',
@@ -50,7 +53,8 @@ export default function MentorshipScreen() {
         {
             id: 1,
             name: 'Arjun Patel',
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
             joinedDate: 'Oct 15, 2024',
             progress: 85,
             avatar: 'AP',
@@ -58,7 +62,8 @@ export default function MentorshipScreen() {
         {
             id: 2,
             name: 'Priya Sharma',
-            sport: '⚽ Football',
+            sport: 'Football',
+            sportIcon: 'football',
             joinedDate: 'Nov 2, 2024',
             progress: 60,
             avatar: 'PS',
@@ -96,7 +101,7 @@ export default function MentorshipScreen() {
                     {SPORTS.slice(0, 2).map((sport) => (
                         <TabButton
                             key={sport.id}
-                            title={`${sport.emoji} ${sport.name}`}
+                            title={sport.name}
                             active={activeSport === sport.id}
                             onPress={() => setActiveSport(sport.id)}
                         />
@@ -130,7 +135,10 @@ export default function MentorshipScreen() {
                                     </View>
                                     <View style={styles.applicantInfo}>
                                         <Text style={styles.applicantName}>{application.name}</Text>
-                                        <Text style={styles.sport}>{application.sport}</Text>
+                                        <View style={styles.sportRow}>
+                                            <Ionicons name={application.sportIcon} size={14} color={COLORS.textSecondary} />
+                                            <Text style={styles.sport}>{application.sport}</Text>
+                                        </View>
                                     </View>
                                     <View style={styles.ratingBadge}>
                                         <Ionicons name="star" size={14} color={COLORS.warning} />
@@ -187,7 +195,10 @@ export default function MentorshipScreen() {
                                     </View>
                                     <View style={styles.applicantInfo}>
                                         <Text style={styles.applicantName}>{mentee.name}</Text>
-                                        <Text style={styles.sport}>{mentee.sport}</Text>
+                                        <View style={styles.sportRow}>
+                                            <Ionicons name={mentee.sportIcon} size={14} color={COLORS.textSecondary} />
+                                            <Text style={styles.sport}>{mentee.sport}</Text>
+                                        </View>
                                     </View>
                                     <Ionicons name="chevron-forward" size={20} color={COLORS.gray} />
                                 </View>
@@ -303,10 +314,15 @@ const styles = StyleSheet.create({
         fontWeight: FONT_WEIGHTS.semiBold,
         color: COLORS.textPrimary,
     },
+    sportRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: SIZES.xs,
+    },
     sport: {
         fontSize: SIZES.small,
         color: COLORS.textSecondary,
-        marginTop: SIZES.xs,
+        marginLeft: SIZES.xs,
     },
     ratingBadge: {
         flexDirection: 'row',

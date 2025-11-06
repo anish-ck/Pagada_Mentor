@@ -27,7 +27,8 @@ export default function EarningsScreen() {
             amount: 1500,
             date: 'Dec 5, 2024',
             status: 'completed',
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
         },
         {
             id: 2,
@@ -44,7 +45,8 @@ export default function EarningsScreen() {
             amount: 1500,
             date: 'Nov 30, 2024',
             status: 'pending',
-            sport: '⚽ Football',
+            sport: 'Football',
+            sportIcon: 'football',
         },
     ];
 
@@ -183,7 +185,12 @@ export default function EarningsScreen() {
                                 {transaction.type === 'session' ? `Session - ${transaction.mentee}` : 'Withdrawal'}
                             </Text>
                             <Text style={styles.transactionDate}>{transaction.date}</Text>
-                            {transaction.sport && <Text style={styles.transactionSport}>{transaction.sport}</Text>}
+                            {transaction.sport && (
+                                <View style={styles.sportRow}>
+                                    <Ionicons name={transaction.sportIcon} size={12} color={COLORS.textSecondary} />
+                                    <Text style={styles.transactionSport}>{transaction.sport}</Text>
+                                </View>
+                            )}
                         </View>
                         <View style={styles.transactionRight}>
                             <Text
@@ -486,10 +493,15 @@ const styles = StyleSheet.create({
         color: COLORS.textSecondary,
         marginTop: SIZES.xs,
     },
+    sportRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 2,
+    },
     transactionSport: {
         fontSize: SIZES.small,
         color: COLORS.textSecondary,
-        marginTop: 2,
+        marginLeft: SIZES.xs,
     },
     transactionRight: {
         alignItems: 'flex-end',

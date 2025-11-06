@@ -14,7 +14,8 @@ export default function ProgressTrackingScreen() {
             id: 1,
             name: 'Arjun Patel',
             avatar: 'AP',
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
             progress: 85,
             submissions: [
                 {
@@ -47,7 +48,8 @@ export default function ProgressTrackingScreen() {
             id: 2,
             name: 'Priya Sharma',
             avatar: 'PS',
-            sport: '⚽ Football',
+            sport: 'Football',
+            sportIcon: 'football',
             progress: 60,
             submissions: [],
             stats: {
@@ -103,7 +105,10 @@ export default function ProgressTrackingScreen() {
                     </View>
                     <View style={styles.menteeInfo}>
                         <Text style={styles.menteeName}>{selectedMentee.name}</Text>
-                        <Text style={styles.sport}>{selectedMentee.sport}</Text>
+                        <View style={styles.sportRow}>
+                            <Ionicons name={selectedMentee.sportIcon} size={14} color={COLORS.textSecondary} />
+                            <Text style={styles.sport}>{selectedMentee.sport}</Text>
+                        </View>
                     </View>
                 </View>
             </Card>
@@ -257,10 +262,15 @@ const styles = StyleSheet.create({
         fontWeight: FONT_WEIGHTS.semiBold,
         color: COLORS.textPrimary,
     },
+    sportRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: SIZES.xs,
+    },
     sport: {
         fontSize: SIZES.small,
         color: COLORS.textSecondary,
-        marginTop: SIZES.xs,
+        marginLeft: SIZES.xs,
     },
     progressSection: {
         marginTop: SIZES.sm,

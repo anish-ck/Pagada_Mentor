@@ -16,7 +16,8 @@ export default function SessionsScreen() {
         {
             id: 1,
             mentee: 'Arjun Patel',
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
             time: '10:00 AM - 11:00 AM',
             date: 'Today',
             type: 'Video Call',
@@ -25,7 +26,8 @@ export default function SessionsScreen() {
         {
             id: 2,
             mentee: 'Priya Sharma',
-            sport: '⚽ Football',
+            sport: 'Football',
+            sportIcon: 'football',
             time: '2:00 PM - 3:00 PM',
             date: 'Tomorrow',
             type: 'In-Person',
@@ -34,7 +36,8 @@ export default function SessionsScreen() {
         {
             id: 3,
             mentee: 'Vikram Singh',
-            sport: '🏏 Cricket',
+            sport: 'Cricket',
+            sportIcon: 'baseball',
             time: '4:00 PM - 5:00 PM',
             date: 'Dec 8, 2024',
             type: 'Video Call',
@@ -114,9 +117,12 @@ export default function SessionsScreen() {
                                 </View>
                                 <View style={styles.sessionInfo}>
                                     <Text style={styles.menteeName}>{session.mentee}</Text>
-                                    <Text style={styles.sport}>{session.sport}</Text>
+                                    <View style={styles.sportRow}>
+                                        <Ionicons name={session.sportIcon} size={14} color={COLORS.textSecondary} />
+                                        <Text style={styles.sport}>{session.sport}</Text>
+                                    </View>
                                 </View>
-                                <View style={styles.typebadge}>
+                                <View style={styles.typeBadge}>
                                     <Ionicons
                                         name={session.type === 'Video Call' ? 'videocam' : 'location'}
                                         size={16}
@@ -231,10 +237,15 @@ const styles = StyleSheet.create({
         fontWeight: FONT_WEIGHTS.semiBold,
         color: COLORS.textPrimary,
     },
+    sportRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: SIZES.xs,
+    },
     sport: {
         fontSize: SIZES.small,
         color: COLORS.textSecondary,
-        marginTop: SIZES.xs,
+        marginLeft: SIZES.xs,
     },
     typeBadge: {
         width: 36,

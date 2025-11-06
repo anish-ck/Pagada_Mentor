@@ -111,10 +111,10 @@ export const SHADOWS = {
 };
 
 export const SPORTS = [
-    { id: 'cricket', name: 'Cricket', emoji: '🏏', color: COLORS.cricket },
-    { id: 'football', name: 'Football', emoji: '⚽', color: COLORS.football },
-    { id: 'basketball', name: 'Basketball', emoji: '🏀', color: '#FF8C42' },
-    { id: 'tennis', name: 'Tennis', emoji: '🎾', color: '#059669' },
-    { id: 'badminton', name: 'Badminton', emoji: '🏸', color: '#8B5CF6' },
-    { id: 'athletics', name: 'Athletics', emoji: '🏃', color: '#EC4899' },
+    { id: 'cricket', name: 'Cricket', icon: 'baseball', color: COLORS.cricket },
+    { id: 'football', name: 'Football', icon: 'football', color: COLORS.football },
+    { id: 'basketball', name: 'Basketball', icon: 'basketball', color: '#FF8C42' },
+    { id: 'tennis', name: 'Tennis', icon: 'tennisball', color: '#059669' },
+    { id: 'badminton', name: 'Badminton', icon: 'tennisball', color: '#8B5CF6' },
+    { id: 'athletics', name: 'Athletics', icon: 'walk', color: '#EC4899' },
 ];
