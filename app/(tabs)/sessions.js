@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,6 +11,16 @@ import { COLORS, SIZES, FONT_WEIGHTS } from '../../constants/theme';
 export default function SessionsScreen() {
     const [activeTab, setActiveTab] = useState('upcoming');
     const [selectedDate, setSelectedDate] = useState('');
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        fadeAnim.setValue(0);
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 400,
+            useNativeDriver: true,
+        }).start();
+    }, [activeTab]);
 
     const upcomingSessions = [
         {
@@ -113,7 +123,7 @@ export default function SessionsScreen() {
                 </ScrollView>
 
                 {/* Sessions List */}
-                <View style={styles.sessionsList}>
+                <Animated.View style={[styles.sessionsList, { opacity: fadeAnim }]}>
                     {upcomingSessions.map((session) => (
                         <Card key={session.id} style={styles.sessionCard}>
                             <View style={styles.sessionHeader}>
@@ -167,7 +177,7 @@ export default function SessionsScreen() {
                             </View>
                         </Card>
                     ))}
-                </View>
+                </Animated.View>
 
                 <View style={{ height: 20 }} />
             </ScrollView>

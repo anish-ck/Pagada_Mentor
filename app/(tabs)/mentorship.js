@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Card from '../../components/Card';
@@ -7,6 +7,30 @@ import Button from '../../components/Button';
 import TabButton from '../../components/TabButton';
 import SearchBar from '../../components/SearchBar';
 import { COLORS, SIZES, FONT_WEIGHTS, SPORTS } from '../../constants/theme';
+
+// Animated Progress Bar Component
+function AnimatedProgressBar({ progress }) {
+    const widthAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(widthAnim, {
+            toValue: progress,
+            duration: 1000,
+            useNativeDriver: false,
+        }).start();
+    }, [progress]);
+
+    const width = widthAnim.interpolate({
+        inputRange: [0, 100],
+        outputRange: ['0%', '100%'],
+    });
+
+    return (
+        <View style={styles.progressBar}>
+            <Animated.View style={[styles.progressFill, { width }]} />
+        </View>
+    );
+}
 
 export default function MentorshipScreen() {
     const [activeTab, setActiveTab] = useState('applications');
@@ -208,9 +232,7 @@ export default function MentorshipScreen() {
                                         <Text style={styles.progressLabel}>Progress</Text>
                                         <Text style={styles.progressPercentage}>{mentee.progress}%</Text>
                                     </View>
-                                    <View style={styles.progressBar}>
-                                        <View style={[styles.progressFill, { width: `${mentee.progress}%` }]} />
-                                    </View>
+                                    <AnimatedProgressBar progress={mentee.progress} />
                                 </View>
 
                                 <Text style={styles.joinedDate}>Joined {mentee.joinedDate}</Text>

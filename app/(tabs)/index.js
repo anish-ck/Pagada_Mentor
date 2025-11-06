@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
@@ -9,6 +9,24 @@ import { COLORS, SIZES, FONT_WEIGHTS } from '../../constants/theme';
 const screenWidth = Dimensions.get('window').width;
 
 export default function DashboardScreen() {
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const slideAnim = useRef(new Animated.Value(30)).current;
+
+    useEffect(() => {
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 800,
+                useNativeDriver: true,
+            }),
+            Animated.timing(slideAnim, {
+                toValue: 0,
+                duration: 600,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }, []);
+
     const stats = [
         { label: 'Total Mentees', value: '45', icon: 'people', color: COLORS.primary },
         { label: 'Hours Mentored', value: '234', icon: 'time', color: COLORS.info },
@@ -48,7 +66,15 @@ export default function DashboardScreen() {
                 </View>
 
                 {/* Stats Grid */}
-                <View style={styles.statsGrid}>
+                <Animated.View 
+                    style={[
+                        styles.statsGrid,
+                        {
+                            opacity: fadeAnim,
+                            transform: [{ translateY: slideAnim }],
+                        },
+                    ]}
+                >
                     {stats.map((stat, index) => (
                         <Card key={index} style={styles.statCard}>
                             <View style={[styles.iconContainer, { backgroundColor: stat.color + '20' }]}>
@@ -58,7 +84,7 @@ export default function DashboardScreen() {
                             <Text style={styles.statLabel}>{stat.label}</Text>
                         </Card>
                     ))}
-                </View>
+                </Animated.View>
 
                 {/* Performance Chart */}
                 <Card style={styles.chartCard}>

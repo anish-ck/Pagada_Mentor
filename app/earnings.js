@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Card from '../components/Card';
@@ -10,6 +10,16 @@ import { COLORS, SIZES, FONT_WEIGHTS } from '../constants/theme';
 export default function EarningsScreen() {
     const [activeTab, setActiveTab] = useState('overview');
     const [withdrawAmount, setWithdrawAmount] = useState('');
+    const fadeAnim = useRef(new Animated.Value(1)).current;
+
+    useEffect(() => {
+        fadeAnim.setValue(0);
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 400,
+            useNativeDriver: true,
+        }).start();
+    }, [activeTab]);
 
     const earnings = {
         available: 33000,
@@ -68,7 +78,7 @@ export default function EarningsScreen() {
     ];
 
     const renderOverview = () => (
-        <View style={styles.content}>
+        <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
             {/* Balance Card */}
             <Card style={styles.balanceCard}>
                 <Text style={styles.balanceLabel}>Available Balance</Text>
@@ -156,11 +166,11 @@ export default function EarningsScreen() {
                     </Card>
                 ))}
             </View>
-        </View>
+        </Animated.View>
     );
 
     const renderTransactions = () => (
-        <View style={styles.content}>
+        <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
             <Text style={styles.sectionTitle}>All Transactions</Text>
             {transactions.map((transaction) => (
                 <Card key={transaction.id} style={styles.transactionCard}>
@@ -232,11 +242,11 @@ export default function EarningsScreen() {
                     </View>
                 </Card>
             ))}
-        </View>
+        </Animated.View>
     );
 
     const renderPricing = () => (
-        <View style={styles.content}>
+        <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
             <Text style={styles.sectionTitle}>Pricing Plans</Text>
             {pricingPlans.map((plan) => (
                 <Card key={plan.id} style={styles.pricingCard}>
@@ -260,11 +270,11 @@ export default function EarningsScreen() {
                     />
                 </Card>
             ))}
-        </View>
+        </Animated.View>
     );
 
     const renderWithdraw = () => (
-        <View style={styles.content}>
+        <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
             <Card style={styles.withdrawCard}>
                 <Text style={styles.withdrawTitle}>Withdraw Funds</Text>
                 <Text style={styles.withdrawSubtitle}>
@@ -314,7 +324,7 @@ export default function EarningsScreen() {
             <Text style={styles.withdrawNote}>
                 Note: Withdrawals are processed within 2-3 business days. A processing fee of 2% applies.
             </Text>
-        </View>
+        </Animated.View>
     );
 
     return (
